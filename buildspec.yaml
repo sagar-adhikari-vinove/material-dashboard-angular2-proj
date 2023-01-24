@@ -17,10 +17,6 @@ phases:
       # - echo testing...
       # - echo building...
       - ng build --configuration production
-  post_build:
-    commands:
-      - mv appspec.yml ./dist/
-      - mv scripts ./dist/
 artifacts:
   files:
     - "**/*"
