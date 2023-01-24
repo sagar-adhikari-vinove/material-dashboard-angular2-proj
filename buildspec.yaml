@@ -20,6 +20,6 @@ phases:
 artifacts:
   files:
     - '**/*'
-    - appspec.yaml
+    - appspec.yml
     - scripts/**/*
  
