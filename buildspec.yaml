@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo installing nodejs...
+      - curl -sL https://rpm.nodesource.com/setup_16.x | sudo -E bash -
+      - yum -y install nodejs 
+  pre_build:
+    commands:
+      - echo installing dependencies...
+      - npm i -g @angular/cli
+      - npm install
+  build:
+    commands:
+      # - echo testing...
+      # - echo building...
+      - ng build --configuration production
+  post_build:
+    commands:
+      - mv appspec.yml ./dist/angular-app
+      - mv scripts ./angular-app
+artifacts:
+  files:
+    - "**/*"
+  discard-paths: no
+  base-directory: dist/angular-app
