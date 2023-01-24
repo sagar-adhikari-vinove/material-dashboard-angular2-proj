@@ -1,4 +1,4 @@
-version: 0.2
+version: 0.1
 
 phases:
   install:
@@ -19,7 +19,7 @@ phases:
   post_build:
     commands:
       - mv appspec.yml ./dist/angular-app
-      - mv scripts ./angular-app
+      - mv scripts .dist//angular-app
 artifacts:
   files:
     - "**/*"
