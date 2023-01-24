@@ -5,7 +5,7 @@ phases:
     commands:
       - echo installing nodejs...
       - curl -sL https://rpm.nodesource.com/setup_12.x | sudo -E bash -
-      - yum -y install nodejs npm
+      - yum -y install nodejs
   pre_build:
     commands:
       - echo installing dependencies...
@@ -15,7 +15,7 @@ phases:
     commands:
       # - echo testing...
       # - echo building...
-      - ng build --configuration production
+      - ng build --prod
   post_build:
     commands:
       - mv appspec.yml ./dist/angular-app
