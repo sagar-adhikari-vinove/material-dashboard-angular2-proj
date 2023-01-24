@@ -22,4 +22,6 @@ artifacts:
     - '**/*'
     - appspec.yml
     - scripts/**/*
+  discard-paths: no
+  base-directory: dist/  
  
