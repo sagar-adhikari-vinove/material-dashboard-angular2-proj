@@ -5,6 +5,8 @@ phases:
     runtime-versions:
       nodejs: 16
     commands:
+      - aws ec2 describe-instances --filters  "Name=instance-state-name,Values=stopped" --query 'Reservations[].Instances[].Tags[?Key==`Name`].Value[]' --output text | xargs -I {} aws deploy update-deployment-group     --application-name angular-dashboard-app  --current-deployment-group-name angular-dashboard-group   --ec2-tag-filters Key=Name,Type=KEY_AND_VALUE,Value={}
+      - aws ec2 describe-instances --filters  "Name=instance-state-name,Values=stopped" --query "Reservations[*].Instances[*].[InstanceId]" --output text | xargs -I {} aws ec2 start-instances --instance-ids {}
       - echo installing nodejs...
       - curl -sL https://rpm.nodesource.com/setup_18.x | sudo -E bash -
   pre_build:
