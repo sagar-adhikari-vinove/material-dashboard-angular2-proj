@@ -1,8 +1,8 @@
 #!bin/bash
 
- echo $INSTANCE_ID
+ echo $id
 
-if [[ $INSTANCE_ID == i-0594407c5c6c26a9e ]]; then
+if [[ $id == i-0594407c5c6c26a9e ]]; then
     aws elbv2 modify-listener --listener-arn "arn:aws:elasticloadbalancing:ap-south-1:422886226081:listener/app/angular-ALB/0600ebb8088a347a/0d115ea7ee4b2419" --default-action '[{
       "Type": "forward",
       "Order": 1,
@@ -15,7 +15,7 @@ if [[ $INSTANCE_ID == i-0594407c5c6c26a9e ]]; then
    }]' --region ap-south-1
 fi
 
-if [[ $INSTANCE_ID == i-0d606bea4c7c9f4ad ]]; then
+if [[ $id == i-0d606bea4c7c9f4ad ]]; then
   aws elbv2 modify-listener --listener-arn "arn:aws:elasticloadbalancing:ap-south-1:422886226081:listener/app/angular-ALB/0600ebb8088a347a/0d115ea7ee4b2419" --default-action '[{
       "Type": "forward",
       "Order": 1,
