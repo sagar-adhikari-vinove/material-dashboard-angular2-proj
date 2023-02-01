@@ -5,8 +5,13 @@ phases:
     runtime-versions:
       nodejs: 16
     commands:
-      - aws ec2 describe-instances --filters  "Name=instance-state-name,Values=stopped" --query 'Reservations[].Instances[].Tags[?Key==`Name`].Value[]' --output text | xargs -I {} aws deploy update-deployment-group     --application-name angular-dashboard-app  --current-deployment-group-name angular-dashboard-group   --ec2-tag-filters Key=Name,Type=KEY_AND_VALUE,Value={}
-      - aws ec2 describe-instances --filters  "Name=instance-state-name,Values=stopped" --query "Reservations[*].Instances[*].[InstanceId]" --output text | xargs -I {} aws ec2 start-instances --instance-ids {}
+#       - aws ec2 describe-instances --filters  "Name=instance-state-name,Values=stopped" --query 'Reservations[].Instances[].Tags[?Key==`Name`].Value[]' --output text | xargs -I {} aws deploy update-deployment-group     --application-name angular-dashboard-app  --current-deployment-group-name angular-dashboard-group   --ec2-tag-filters Key=Name,Type=KEY_AND_VALUE,Value={}
+      - aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --filters "Name=instance-state-name,Values=stopped" 'Name=tag-value,Values=angular-dashboard-app,angular-dashboard-app-02' --output text  --region ap-south-1 | xargs -I {} aws deploy update-deployment-group     --application-name angular-dashboard-app  --current-deployment-group-name angular-dashboard-group   --ec2-tag-filters Key=Name,Type=KEY_AND_VALUE,Value={} --region ap-south-1
+#       - aws ec2 describe-instances --filters  "Name=instance-state-name,Values=stopped" --query "Reservations[*].Instances[*].[InstanceId]" --output text | xargs -I {} aws ec2 start-instances --instance-ids {}
+     
+      - run_id=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --filters "Name=instance-state-name,Values=running" 'Name=tag-value,Values=angular-dashboard-app,angular-dashboard-app-02' --output text  --region ap-south-1)
+      - ech0 $run_id
+      - aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --filters "Name=instance-state-name,Values=stopped" 'Name=tag-value,Values=angular-dashboard-app,angular-dashboard-app-02' --output text  --region ap-south-1 | xargs -I {} aws ec2 start-instances --instance-ids {} --region ap-south-1
       - id=$(aws ec2 describe-instances --filters  "Name=instance-state-name,Values=pending" --query "Reservations[*].Instances[*].[InstanceId]" --output text --region ap-south-1)
       - echo $id
       - echo installing nodejs...
@@ -26,6 +31,7 @@ phases:
       - mv appspec.yml ./dist
       - bash scripts/listen.sh
       - mv scripts ./dist 
+      - aws ec2 stop-instances --instance-ids $run_id --region ap-south-1
 artifacts:
   files:
     - "**/*"
