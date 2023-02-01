@@ -26,3 +26,8 @@ hooks:
     - location: scripts/stop_server.sh
       timeout: 300
       runas: root
+      
+  ChangeListener:
+    - location: /home/ec2-user/listen.sh
+      timout: 300
+      runas: root
