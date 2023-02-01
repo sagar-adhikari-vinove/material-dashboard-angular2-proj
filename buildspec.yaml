@@ -24,7 +24,7 @@ phases:
   post_build:
     commands:
       - mv appspec.yml ./dist
-      - bash scripts/listen.sh
+#       - bash scripts/listen.sh
       - mv scripts ./dist 
 artifacts:
   files:
