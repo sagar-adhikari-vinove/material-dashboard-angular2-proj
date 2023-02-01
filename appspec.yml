@@ -28,6 +28,6 @@ hooks:
       runas: root
       
   ChangeListener:
-    - location: /home/ec2-user/listen.sh
+    - location: scripts/listen.sh
       timout: 300
       runas: root
