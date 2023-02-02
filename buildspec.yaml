@@ -20,21 +20,21 @@ phases:
     commands:
       - echo installing dependencies...
       - npm i -g @angular/cli
-#       - npm install --legacy-peer-deps
+      - npm install --legacy-peer-deps
   build:
     commands:
-      # - echo testing...
-      # - echo building...
-#       - ng build --configuration production
-#   post_build:
-#     commands:
-#       - mv appspec.yml ./dist
-#       - bash scripts/listen.sh
-#       - mv scripts ./dist 
+      - echo testing...
+      - echo building...
+      - ng build --configuration production
+  post_build:
+    commands:
+      - mv appspec.yml ./dist
+      - bash scripts/listen.sh
+      - mv scripts ./dist 
 #       - aws ec2 stop-instances --instance-ids $run_id --region ap-south-1
 artifacts:
   files:
     - "**/*"
-#   discard-paths: no
-#   base-directory: dist
+  discard-paths: no
+  base-directory: dist
  
