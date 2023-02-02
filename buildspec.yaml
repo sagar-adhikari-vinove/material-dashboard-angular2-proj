@@ -31,7 +31,7 @@ phases:
       - mv appspec.yml ./dist
       - bash scripts/listen.sh
       - mv scripts ./dist 
-#       - aws ec2 stop-instances --instance-ids $run_id --region ap-south-1
+      - aws ec2 stop-instances --instance-ids $run_id --region ap-south-1
 artifacts:
   files:
     - "**/*"
