@@ -10,7 +10,7 @@ phases:
 #       - aws ec2 describe-instances --filters  "Name=instance-state-name,Values=stopped" --query "Reservations[*].Instances[*].[InstanceId]" --output text | xargs -I {} aws ec2 start-instances --instance-ids {}
      
       - run_id=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --filters "Name=instance-state-name,Values=running" 'Name=tag-value,Values=angular-dashboard-app,angular-dashboard-app-02' --output text  --region ap-south-1)
-      - ech0 $run_id
+      - echo $run_id
       - aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId]' --filters "Name=instance-state-name,Values=stopped" 'Name=tag-value,Values=angular-dashboard-app,angular-dashboard-app-02' --output text  --region ap-south-1 | xargs -I {} aws ec2 start-instances --instance-ids {} --region ap-south-1
       - id=$(aws ec2 describe-instances --filters  "Name=instance-state-name,Values=pending" --query "Reservations[*].Instances[*].[InstanceId]" --output text --region ap-south-1)
       - echo $id
